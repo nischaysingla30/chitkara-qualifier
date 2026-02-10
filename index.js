@@ -1,16 +1,18 @@
 const express = require("express");
 const axios = require("axios");
+const cors = require("cors");
+
 
 const app = express();
+app.use(cors())
 app.use(express.json());
 app.use(express.static("public"));
-
 
 const OFFICIAL_EMAIL = "nischay1353.be23@chitkarauniversity.edu.in"; 
 
 // Health API
 app.get("/health", (req, res) => {
-  res.status(200).json({
+  return res.status(200).json({
     is_success: true,
     official_email: OFFICIAL_EMAIL
   });
@@ -70,14 +72,14 @@ app.post("/bfhl", async (req, res) => {
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       is_success: true,
       official_email: OFFICIAL_EMAIL,
       data: data
     });
 
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       is_success: false,
       official_email: OFFICIAL_EMAIL,
       error: "Server error"

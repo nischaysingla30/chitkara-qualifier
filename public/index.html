@@ -68,12 +68,10 @@
 <pre id="output"></pre>
 
 <script>
-const BACKEND_URL = "https://YOUR-BACKEND-URL.onrender.com"; // CHANGE THIS
-
 async function checkHealth() {
   try {
-    const res = await fetch(BACKEND_URL + "/health");
-    const data = await res.json();
+    const res = await fetch("/health");
+    await res.json();
     document.getElementById("healthStatus").innerText = "OK ✅";
   } catch (err) {
     document.getElementById("healthStatus").innerText = "Backend Not Reachable ❌";
@@ -84,58 +82,79 @@ function showOutput(data) {
   document.getElementById("output").textContent = JSON.stringify(data, null, 2);
 }
 
+
 async function sendFib() {
   const n = Number(document.getElementById("fibInput").value);
-  const res = await fetch(BACKEND_URL + "/bfhl", {
+  const res = await fetch("/bfhl", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ fibonacci: n })
   });
-  showOutput(await res.json());
+
+  const data = await res.json();
+  console.log("Fibonacci:", data.data);
+  showOutput(data.data);
 }
+
 
 async function sendPrime() {
   const arr = document.getElementById("primeInput").value.split(",").map(Number);
-  const res = await fetch(BACKEND_URL + "/bfhl", {
+  const res = await fetch("/bfhl", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ prime: arr })
   });
-  showOutput(await res.json());
+
+  const data = await res.json();
+  console.log("Prime:", data.data);
+  showOutput(data.data);
 }
+
 
 async function sendLCM() {
   const arr = document.getElementById("lcmInput").value.split(",").map(Number);
-  const res = await fetch(BACKEND_URL + "/bfhl", {
+  const res = await fetch("/bfhl", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ lcm: arr })
   });
-  showOutput(await res.json());
+
+  const data = await res.json();
+  console.log("LCM:", data.data);
+  showOutput(data.data);
 }
+
 
 async function sendHCF() {
   const arr = document.getElementById("hcfInput").value.split(",").map(Number);
-  const res = await fetch(BACKEND_URL + "/bfhl", {
+  const res = await fetch("/bfhl", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ hcf: arr })
   });
-  showOutput(await res.json());
+
+  const data = await res.json();
+  console.log("HCF:", data.data);
+  showOutput(data.data);
 }
+
 
 async function sendAI() {
   const q = document.getElementById("aiInput").value;
-  const res = await fetch(BACKEND_URL + "/bfhl", {
+  const res = await fetch("/bfhl", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ AI: q })
   });
-  showOutput(await res.json());
+
+  const data = await res.json();
+  console.log("AI:", data.data);
+  showOutput(data.data);
 }
 
 checkHealth();
 </script>
+
 
 </body>
 </html>

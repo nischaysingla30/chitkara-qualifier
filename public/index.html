@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chitkara Qualifier API Tester</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h2 { color: #333; }
+    .card {
+      background: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px #ccc;
+    }
+    input, button {
+      padding: 8px;
+      width: 100%;
+      margin-top: 5px;
+    }
+    pre {
+      background: #222;
+      color: #0f0;
+      padding: 10px;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Chitkara Qualifier API Tester</h1>
+<p>Backend Health: <span id="healthStatus">Checking...</span></p>
+
+<div class="card">
+  <h2>Fibonacci</h2>
+  <input id="fibInput" type="number" placeholder="Enter number (e.g. 7)">
+  <button onclick="sendFib()">Submit Fibonacci</button>
+</div>
+
+<div class="card">
+  <h2>Prime Filter</h2>
+  <input id="primeInput" placeholder="Enter numbers comma separated (e.g. 2,4,7,9,11)">
+  <button onclick="sendPrime()">Submit Prime</button>
+</div>
+
+<div class="card">
+  <h2>LCM</h2>
+  <input id="lcmInput" placeholder="Enter numbers comma separated">
+  <button onclick="sendLCM()">Submit LCM</button>
+</div>
+
+<div class="card">
+  <h2>HCF</h2>
+  <input id="hcfInput" placeholder="Enter numbers comma separated">
+  <button onclick="sendHCF()">Submit HCF</button>
+</div>
+
+<div class="card">
+  <h2>AI Question</h2>
+  <input id="aiInput" placeholder="Ask a question">
+  <button onclick="sendAI()">Ask AI</button>
+</div>
+
+<h2>Response</h2>
+<pre id="output"></pre>
+
+<script>
+const BACKEND_URL = "https://YOUR-BACKEND-URL.onrender.com"; // CHANGE THIS
+
+async function checkHealth() {
+  try {
+    const res = await fetch(BACKEND_URL + "/health");
+    const data = await res.json();
+    document.getElementById("healthStatus").innerText = "OK ✅";
+  } catch (err) {
+    document.getElementById("healthStatus").innerText = "Backend Not Reachable ❌";
+  }
+}
+
+function showOutput(data) {
+  document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+}
+
+async function sendFib() {
+  const n = Number(document.getElementById("fibInput").value);
+  const res = await fetch(BACKEND_URL + "/bfhl", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ fibonacci: n })
+  });
+  showOutput(await res.json());
+}
+
+async function sendPrime() {
+  const arr = document.getElementById("primeInput").value.split(",").map(Number);
+  const res = await fetch(BACKEND_URL + "/bfhl", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ prime: arr })
+  });
+  showOutput(await res.json());
+}
+
+async function sendLCM() {
+  const arr = document.getElementById("lcmInput").value.split(",").map(Number);
+  const res = await fetch(BACKEND_URL + "/bfhl", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ lcm: arr })
+  });
+  showOutput(await res.json());
+}
+
+async function sendHCF() {
+  const arr = document.getElementById("hcfInput").value.split(",").map(Number);
+  const res = await fetch(BACKEND_URL + "/bfhl", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ hcf: arr })
+  });
+  showOutput(await res.json());
+}
+
+async function sendAI() {
+  const q = document.getElementById("aiInput").value;
+  const res = await fetch(BACKEND_URL + "/bfhl", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ AI: q })
+  });
+  showOutput(await res.json());
+}
+
+checkHealth();
+</script>
+
+</body>
+</html>

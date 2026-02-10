@@ -3,6 +3,8 @@ const axios = require("axios");
 
 const app = express();
 app.use(express.json());
+app.use(express.static("public"));
+
 
 const OFFICIAL_EMAIL = "nischay1353.be23@chitkarauniversity.edu.in"; 
 
